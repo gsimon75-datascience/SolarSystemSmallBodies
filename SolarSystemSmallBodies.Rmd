@@ -1,5 +1,12 @@
-# SolarSystemSmallBodies
-Chart display of some basic properties of the small-body objects within the solar system
+---
+title: "Small-Body Objects of the Solar System"
+author: "Gabor Simon"
+date: "2017-12-24"
+output:
+    html_document:
+        self_contained: false
+
+---
 
 ## About
 
@@ -26,3 +33,35 @@ You can zoom/pan/select any part of the chart using the Plotly icons.
 
 The source GitHub repository is accessible [here](https://github.com/gsimon75/SolarSystemSmallBodies),
 the online viewable HTML page [here](https://gsimon75.github.io/SolarSystemSmallBodies).
+
+## The chart
+
+```{r, message=F, warning=F}
+library(plotly)
+```
+
+```{r}
+sb <- read.csv("solar_sb_20km.csv")
+
+# quantile range for objects to keep
+bracket <- c(0.2, 0.8)
+a_bracket <- quantile(sb$a, probs=bracket)
+
+# discard outliers, use meaningful names
+sb <- sb %>%
+	filter(a_bracket[[1]] <= a & a <= a_bracket[[2]]) %>%
+	transmute(name, diameter, eccentricity=e, semi.major.axis=a, perihelion=q, inclination=i, period=per_y) 
+
+# generate popup info strings
+sb$hover <- with(sb, paste(name,
+		"<br>diameter=", diameter,
+		"<br>eccentricity=", eccentricity,
+		"<br>semi-major axis=", semi.major.axis,
+		"<br>perihelion=", perihelion,
+		"<br>inclination=", inclination,
+		"<br>period=", period))
+
+# generate the chart
+plot_ly(sb, type="scatter", mode="markers", x=~semi.major.axis, y=~perihelion, size=~diameter, color=~period, text=~hover)
+```
+
