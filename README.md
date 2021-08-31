@@ -24,5 +24,5 @@ Hovering the cursor on an object, the details are displayed in a popup.
 
 You can zoom/pan/select any part of the chart using the Plotly icons.
 
-The source GitHub repository is accessible [here](https://github.com/gsimon75/SolarSystemSmallBodies),
-the online viewable HTML page [here](https://gsimon75.github.io/SolarSystemSmallBodies).
+The source GitHub repository is accessible [here](https://github.com/gsimon75-datascience/SolarSystemSmallBodies),
+the online viewable HTML page [here](https://gsimon75-datascience.github.io/SolarSystemSmallBodies).
